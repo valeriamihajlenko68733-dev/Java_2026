@@ -1,0 +1,75 @@
+//Практика 1
+public class EnumInitExample {
+    // Перечисление с инициализацией
+    public enum Day {
+        MONDAY("Понедельник", 1),
+        TUESDAY("Вторник", 2),
+        WEDNESDAY("Среда", 3),
+        THURSDAY("Четверг", 4),
+        FRIDAY("Пятница", 5),
+        SATURDAY("Суббота", 6),
+        SUNDAY("Воскресенье", 7);
+
+        private final String russianName;
+        private final int number;
+
+        // Конструктор перечисления (всегда private, вызывается для каждой константы)
+        Day(String russianName, int number) {
+            this.russianName = russianName;
+            this.number = number;
+        }
+
+        public String getRussianName() {
+            return russianName;
+        }
+
+        public int getNumber() {
+            return number;
+        }
+    }
+
+    public static void main(String[] args) {
+        for (Day d : Day.values()) {
+            System.out.println(d + " – " + d.getRussianName() + " (" + d.getNumber() + ")");
+        }
+    }
+}
+
+//Практика 2
+
+public class EnumMethodExample {
+    public enum Planet {
+        MERCURY(3.303e+23, 2.4397e6),
+        VENUS(4.869e+24, 6.0518e6),
+        EARTH(5.976e+24, 6.37814e6),
+        MARS(6.421e+23, 3.3972e6),
+        JUPITER(1.9e+27,   7.1492e7),
+        SATURN(5.688e+26, 6.0268e7),
+        URANUS(8.686e+25, 2.5559e7),
+        NEPTUNE(1.024e+26, 2.4746e7);
+
+        private final double mass;   // в кг
+        private final double radius; // в метрах
+
+        private static final double G = 6.67430e-11;
+
+        Planet(double mass, double radius) {
+            this.mass = mass;
+            this.radius = radius;
+        }
+
+        // Дополнительный метод – вычисление ускорения свободного падения
+        public double surfaceGravity() {
+            return G * mass / (radius * radius);
+        }
+
+        public double mass() { return mass; }
+        public double radius() { return radius; }
+    }
+
+    public static void main(String[] args) {
+        for (Planet p : Planet.values()) {
+            System.out.printf("Ускорение на %s: %.2f м/с²%n", p, p.surfaceGravity());
+        }
+    }
+}

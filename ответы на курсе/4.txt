@@ -1,0 +1,40 @@
+/**
+ * Простой калькулятор, демонстрирующий базовые арифметические операции.
+ * Этот класс служит примером для генерации документации с помощью Javadoc.
+ *
+ * @author Ваше Имя
+ * @version 1.1
+ * @since 2026-05-08
+ */
+public class Calculator {
+
+    /**
+     * Складывает два целых числа.
+     *
+     * @param a Первое слагаемое.
+     * @param b Второе слагаемое.
+     * @return Сумма a и b.
+     * @throws IllegalArgumentException Если оба аргумента отрицательные (просто пример).
+     */
+    public int add(int a, int b) {
+        if (a < 0 && b < 0) {
+            throw new IllegalArgumentException("Сложение двух отрицательных чисел не поддерживается");
+        }
+        return a + b;
+    }
+
+    /**
+     * Делит одно число на другое.
+     *
+     * @param dividend Делимое.
+     * @param divisor Делитель.
+     * @return Результат деления.
+     * @throws ArithmeticException Если делитель равен нулю.
+     */
+    public double divide(double dividend, double divisor) {
+        if (divisor == 0) {
+            throw new ArithmeticException("Деление на ноль!");
+        }
+        return dividend / divisor;
+    }
+}

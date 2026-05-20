@@ -1,0 +1,61 @@
+//Практика 1 
+
+public class VarargsOverloadDemo {
+
+    // 1. Метод, принимающий произвольное количество целых чисел
+    public void print(String prefix, int... numbers) {
+        System.out.print(prefix + " (int...): ");
+        for (int num : numbers) {
+            System.out.print(num + " ");
+        }
+        System.out.println();
+    }
+
+    // 2. Метод, принимающий произвольное количество строк
+    public void print(String prefix, String... strings) {
+        System.out.print(prefix + " (String...): ");
+        for (String str : strings) {
+            System.out.print(str + " ");
+        }
+        System.out.println();
+    }
+
+    // 3. Метод, принимающий произвольное количество объектов (наиболее общий)
+    public void print(String prefix, Object... objects) {
+        System.out.print(prefix + " (Object...): ");
+        for (Object obj : objects) {
+            System.out.print(obj + " ");
+        }
+        System.out.println();
+    }
+
+    // 4. Перегрузка с другим типом varargs и дополнительным обычным параметром
+    public void print(double d, int... numbers) {
+        System.out.print("double=" + d + " (int...): ");
+        for (int num : numbers) {
+            System.out.print(num + " ");
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        VarargsOverloadDemo demo = new VarargsOverloadDemo();
+
+        // Вызов метода с int...:
+        demo.print(">>> ", 1, 2, 3);   // первый метод, т.к. аргументы – int
+
+        // Вызов метода с String...:
+        demo.print(">>> ", "A", "B", "C"); // второй метод, т.к. аргументы – строки
+
+        // Вызов метода с Object...:
+        demo.print(">>> ", 1, "two", 3.0); // третий метод, т.к. нет точного совпадения
+
+        // Вызов метода с double + int...:
+        demo.print(3.14, 5, 10, 15); // четвёртый метод
+
+        // Вызов с единственным аргументом, который подходит под несколько сигнатур:
+        demo.print(">>> ", 42);   //  int... 
+        demo.print(">>> ", "only");  // String...
+        demo.print(">>> ", (Object) 42); // явно Object... 
+    }
+}

@@ -1,0 +1,109 @@
+//Практика 1 
+public class Outer {
+    private class InnerPrivate { }
+    class InnerDefault { }
+    protected class InnerProtected { }
+    public class InnerPublic { }
+    
+    // Внутри внешнего класса доступны все
+    void create() {
+        InnerPrivate p = new InnerPrivate();
+        InnerDefault d = new InnerDefault();
+        InnerProtected pr = new InnerProtected();
+        InnerPublic pu = new InnerPublic();
+    }
+}
+
+// В том же пакете
+class SamePackage {
+    void test() {
+        Outer o = new Outer();
+        // Outer.InnerPrivate ip = o.new InnerPrivate(); // ошибка
+        Outer.InnerDefault id = o.new InnerDefault();   // OK
+        Outer.InnerProtected ipr = o.new InnerProtected(); // OK
+        Outer.InnerPublic ipu = o.new InnerPublic();    // OK
+    }
+}
+
+// В другом пакете, подкласс Outer
+package other;
+import mypackage.Outer;
+class Sub extends Outer {
+    void test() {
+        // Outer.InnerDefault id = new Outer().new InnerDefault(); // ошибка (другой пакет)
+        Outer.InnerProtected ipr = new Outer().new InnerProtected(); // OK (protected)
+        Outer.InnerPublic ipu = new Outer().new InnerPublic();       // OK
+    }
+}
+
+Объяснение:
+Внутренние классы (нестатические) могут быть объявлены с любым спецификатором доступа: private, protected, public или без модификатора (package-private). Их видимость регулируется так же, как и для полей и методов:
+private – класс доступен только внутри внешнего класса. Даже классы из того же пакета не видят его.
+Package-private (без модификатора) – класс доступен всем классам того же пакета.
+protected – класс доступен внутри пакета + подклассам внешнего класса (в любых пакетах).
+public – класс доступен везде, где доступен сам внешний класс.
+
+//Практика 2 
+
+Да, внутренний класс (нестатический) имеет полный доступ ко всем полям и методам внешнего класса, независимо от их спецификаторов доступа (включая private). Это связано с тем, что внутренний класс неявно содержит ссылку на объект внешнего класса и находится в его области видимости. Спецификаторы доступа членов внешнего класса не ограничивают доступ из внутреннего класса.
+
+public class Outer {
+    private int privateField = 1;
+    protected int protectedField = 2;
+    public int publicField = 3;
+    int defaultField = 4;
+
+    private void privateMethod() { }
+
+    public class Inner {
+        public void accessOuter() {
+            System.out.println(privateField);   // Доступен
+            System.out.println(protectedField); // Доступен
+            System.out.println(publicField);    // Доступен
+            System.out.println(defaultField);   // Доступен
+            privateMethod();                    // Доступен
+        }
+    }
+}
+
+Как видно, внутренний класс Inner обращается ко всем членам Outer, включая private, без каких-либо ограничений. Таким образом, спецификаторы доступа внешнего класса не влияют на видимость из внутреннего класса.
+
+//Практика 3 
+
+Да, внешний класс имеет доступ к полям и методам внутреннего класса, но только через экземпляр внутреннего класса. Важно, что спецификаторы доступа членов внутреннего класса не препятствуют доступу со стороны внешнего класса: внешний класс может обращаться даже к private полям и методам своего внутреннего класса. Однако для всех остальных классов (не являющихся внешним) спецификаторы работают стандартно.
+
+public class Outer {
+    // Внутренний класс
+    public class Inner {
+        private int innerPrivate = 10;
+        int innerDefault = 20;
+        protected int innerProtected = 30;
+        public int innerPublic = 40;
+
+        private void innerPrivateMethod() {
+            System.out.println("private метод внутреннего класса");
+        }
+    }
+
+    // Метод внешнего класса
+    void accessInner() {
+        Inner in = new Inner();               // создаём экземпляр внутреннего класса
+        System.out.println(in.innerPrivate);  // Доступно (private виден)
+        System.out.println(in.innerDefault);  // Доступно
+        System.out.println(in.innerProtected);// Доступно
+        System.out.println(in.innerPublic);   // Доступно
+        in.innerPrivateMethod();              // Доступно
+    }
+}
+
+// Другой класс (не внешний)
+class Other {
+    void test() {
+        Outer out = new Outer();
+        Outer.Inner in = out.new Inner();
+        // System.out.println(in.innerPrivate);  // Ошибка: private
+        System.out.println(in.innerPublic);       // OK
+    }
+}
+
+Из примера видно, что внешний класс Outer обращается к private полю innerPrivate и private методу innerPrivateMethod() внутреннего класса Inner, тогда как другой класс Other этого сделать не может. Таким образом, для внешнего класса спецификаторы доступа внутреннего класса игнорируются, а для всех остальных — соблюдаются.

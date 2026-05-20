@@ -1,0 +1,71 @@
+//Практика 1
+
+class Animal {
+    String name = "Животное";
+
+    Animal(String name) {
+        this.name = name;
+    }
+
+    void sound() {
+        System.out.println("Издаёт звук");
+    }
+}
+
+class Dog extends Animal {
+    String name = "Собака";  // скрывает поле name суперкласса
+
+    Dog(String name) {
+        super(name);          // 1. вызов конструктора суперкласса
+    }
+
+    void printNames() {
+        System.out.println("super.name = " + super.name); // 2. доступ к полю суперкласса
+        System.out.println("this.name = " + this.name);
+    }
+
+    @Override
+    void sound() {
+        super.sound();        // 3. доступ к методу суперкласса
+        System.out.println("Гав-гав");
+    }
+}
+
+public class SuperDemo {
+    public static void main(String[] args) {
+        Dog dog = new Dog("Шарик");
+        dog.printNames();
+        dog.sound();
+    }
+}
+
+//Практика 2
+При вызове метода method() объекта класса C никакой ошибки не произойдёт. Несмотря на то, что в классе B нет собственной переменной a и собственного метода method(), super.a и super.method() будут искать эти члены в иерархии выше. Поскольку B наследует A, а в A определены int a и void method(), то компилятор найдёт их в суперклассе A. Таким образом, super.a обратится к полю a из A, а super.method() вызовет метод method() из A. Код отработает штатно.
+
+//Практика 3
+class A {
+    int a;
+    int b;
+    int c;
+    int z;
+
+    // Базовый конструктор, инициализирующий z
+    public A() {
+        z = 1;
+    }
+
+    public A(int a) {
+        this();          // вызов A() – инициализирует z = 1
+        this.a = a;
+    }
+
+    public A(int a, int b) {
+        this(a);         // вызов A(int a) – который уже вызовет this()
+        this.b = b;
+    }
+
+    public A(int a, int b, int c) {
+        this(a, b);      // вызов A(int a, int b) – цепочка ведёт к this()
+        this.c = c;
+    }
+}

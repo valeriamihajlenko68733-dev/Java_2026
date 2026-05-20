@@ -1,0 +1,29 @@
+//Практика 1
+
+// При объявлении 
+public class A {
+    public final int a = 10;
+}
+
+//В конструкторе 
+public class A {
+    public final int a;
+    
+    public A() {
+        a = 10;
+    }
+    
+    // Альтернатива с параметром
+    public A(int value) {
+        a = value;
+    }
+}
+
+//В блоке инициализации экземпляра 
+public class A {
+    public final int a;
+    
+    {
+        a = 10;
+    }
+}

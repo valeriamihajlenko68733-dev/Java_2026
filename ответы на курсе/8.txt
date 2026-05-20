@@ -1,0 +1,45 @@
+//Практика 1
+
+public class SwitchTypesExample {
+    public static void main(String[] args) {
+        // 1. int
+        int intVal = 2;
+        switch(intVal) {
+            case 1: System.out.println("int: 1"); break;
+            case 2: System.out.println("int: 2"); break;
+        }
+
+        // 2. char
+        char charVal = 'B';
+        switch(charVal) {
+            case 'A': System.out.println("char: A"); break;
+            case 'B': System.out.println("char: B"); break;
+        }
+
+        // 3. String
+        String strVal = "hello";
+        switch(strVal) {
+            case "hello": System.out.println("String: hello"); break;
+            case "world": System.out.println("String: world"); break;
+        }
+
+        // 4. enum
+        enum Color { RED, GREEN, BLUE }
+        Color color = Color.GREEN;
+        switch(color) {
+            case RED: System.out.println("enum: RED"); break;
+            case GREEN: System.out.println("enum: GREEN"); break;
+        }
+    }
+}
+
+//Практика 2
+
+Ответ: При отсутствии break в блоке case происходит проваливание (fall-through): выполнение программы не прерывается после завершения текущего case, а продолжает последовательно выполняться код всех следующих case (включая их действия), пока не встретится break или не закончится конструкция switch.
+
+В примере:
+
+Если value == 1: выполняется i = 1, затем break → выход из switch.
+Если value == 2: выполняется i = 2, так как break отсутствует, программа «проваливается» в case 3 и выполняет i = 3, затем встречает break → выход. В итоге i станет 3 (значение из последнего case).
+Если value == 3: выполняется i = 3, затем break → выход, i = 3.
+Если value не равно 1, 2 или 3: выполняется default (если он есть) или ничего не делается.

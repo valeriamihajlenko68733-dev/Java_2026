@@ -1,0 +1,26 @@
+//Практика 1
+//while
+while (true) {
+    System.out.println("Этот цикл никогда не остановится без break");
+}
+//do-while
+do {
+    System.out.println("Бесконечный do-while цикл");
+} while (true);
+
+//Практика 2
+
+public class BreakContinueExample {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 10; i++) {
+            if (i == 3) {
+                continue; // пропускаем вывод числа 3
+            }
+            if (i == 7) {
+                break;    // выходим из цикла при достижении 7
+            }
+            System.out.print(i + " ");
+        }
+        // Вывод: 1 2 4 5 6 
+    }
+}

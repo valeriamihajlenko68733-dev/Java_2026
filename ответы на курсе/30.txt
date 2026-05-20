@@ -1,0 +1,80 @@
+//Практика 1 
+
+// Интерфейс с неабстрактным (default) и статическим методом
+interface Calculator {
+    // Абстрактный метод (по-прежнему может быть)
+    int calculate(int a, int b);
+    
+    // Default метод – неабстрактный, может быть переопределён
+    default void printResult(int result) {
+        System.out.println("Результат: " + result);
+    }
+    
+    // Статический метод – принадлежит интерфейсу
+    static void info() {
+        System.out.println("Это интерфейс Calculator");
+    }
+}
+
+// Класс, реализующий интерфейс
+class SimpleCalc implements Calculator {
+    @Override
+    public int calculate(int a, int b) {
+        return a + b;
+    }
+    
+    // default метод можно не переопределять, но можем, если нужно
+    @Override
+    public void printResult(int result) {
+        System.out.println(">>> " + result);   // переопределён
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        SimpleCalc calc = new SimpleCalc();
+        
+        // Вызов абстрактного метода (реализован в классе)
+        int sum = calc.calculate(5, 3);
+        
+        // Вызов default метода через объект
+        calc.printResult(sum);   // >>> 8
+        
+        // Вызов статического метода через имя интерфейса (не через объект)
+        Calculator.info();       // Это интерфейс Calculator
+        
+        // Доступ к static методу через ссылку на объект – запрещено!
+        // calc.info();  // ошибка компиляции
+    }
+}
+Способы вызова:
+
+Абстрактный метод – только через объект реализующего класса.
+Default метод – через объект (экземпляр класса). Может быть переопределён в классе.
+Статический метод – только через имя интерфейса (Calculator.info()). Не наследуется и не может быть вызван через ссылку на объект.
+
+
+//Практика 2 
+Если класс реализует два интерфейса, в которых есть одинаковые неабстрактные (default) методы с одинаковой сигнатурой, то компилятор выдаст ошибку, так как возникает неоднозначность — класс наследует две конфликтующие реализации. Чтобы разрешить конфликт, класс обязан переопределить этот метод. В переопределённом методе можно либо написать свою реализацию, либо явно вызвать реализацию из любого из интерфейсов с помощью синтаксиса ИмяИнтерфейса.super.метод().
+
+interface A {
+    default void greet() {
+        System.out.println("Привет из A");
+    }
+}
+
+interface B {
+    default void greet() {
+        System.out.println("Привет из B");
+    }
+}
+
+class MyClass implements A, B {
+    // Обязательное переопределение – иначе ошибка компиляции
+    @Override
+    public void greet() {
+        A.super.greet();   // выбираем реализацию из A
+        // или B.super.greet();
+        // или своя логика: System.out.println("Моя реализация");
+    }
+}

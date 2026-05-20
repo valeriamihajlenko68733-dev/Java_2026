@@ -1,0 +1,16 @@
+//Практика 1
+
+public class ExceptionDemo {
+    public static void main(String[] args) {
+        // Исключение, которое будет перехвачено
+        try {
+            int a = 10 / 0; // ArithmeticException
+        } catch (ArithmeticException e) {
+            System.out.println("Перехвачено: " + e);
+        }
+
+        // Исключение, которое не будет перехвачено - аварийная остановка
+        int[] arr = new int[2];
+        arr[5] = 100; // ArrayIndexOutOfBoundsException – программа упадёт
+    }
+}

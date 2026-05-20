@@ -1,0 +1,159 @@
+//Практика 1
+public class PrimitiveExamples {
+    byte byteField;
+    short shortField;
+    int intField;
+    long longField;
+    float floatField;
+    double doubleField;
+    char charField;
+    boolean booleanField;
+
+    public static void main(String[] args) {
+        PrimitiveExamples obj = new PrimitiveExamples();
+        System.out.println("byteField = " + obj.byteField);    
+        System.out.println("shortField = " + obj.shortField);  
+        System.out.println("intField = " + obj.intField);       
+        System.out.println("longField = " + obj.longField);    
+        System.out.println("floatField = " + obj.floatField);   
+        System.out.println("doubleField = " + obj.doubleField); 
+        System.out.println("charField = [" + obj.charField + "]"); 
+        System.out.println("booleanField = " + obj.booleanField);   
+
+
+        byte localByte = 0;
+        short localShort = 0;
+        int localInt = 0;
+        long localLong = 0L;
+        float localFloat = 0.0f;
+        double localDouble = 0.0;
+        char localChar = '\u0000';  // или ' '
+        boolean localBoolean = false;
+
+        // Примеры ненулевых значений
+        byte b = 127;
+        short s = 32767;
+        int i = 2_000_000_000;
+        long l = 9_000_000_000L;
+        float f = 3.14f;
+        double d = 2.718281828459045;
+        char c = 'A';
+        boolean bool = true;
+    }
+}
+
+//Практика 2
+public class UnicodeName {
+    public static void main(String[] args) {
+        System.out.println("\u0412\u0430\u043B\u0435\u0440\u0438\u0439");
+    }
+}
+
+//Практика 3
+Объяснение: Переменная b объявлена внутри блока {}, поэтому её область действия заканчивается сразу после закрывающей фигурной скобки. В строке int c = a + b; переменная b уже не существует → ошибка компиляции "cannot find symbol".
+
+//Практика 4
+public class StringConcat {
+    public static void main(String[] args) {
+        String str = "Результат: ";
+        int intVal = 42;
+        double doubleVal = 3.14;
+        boolean boolVal = true;
+        Object obj = new Object();
+
+        System.out.println(str + intVal);        
+        System.out.println("Число " + doubleVal); 
+        System.out.println("Флаг: " + boolVal);   
+        System.out.println("Объект: " + obj);    
+        System.out.println(100 + " рублей");       
+    }
+}
+
+//Практика 5
+public class ArithmeticPromotion {
+    public static void main(String[] args) {
+        byte b = 10;
+        short s = 20;
+        int i = 30;
+        long l = 40L;
+        float f = 5.5f;
+        double d = 6.6;
+
+        
+        int result1 = b + s;
+        long result2 = i + l;
+        float result3 = l + f;
+        double result4 = f + d;
+        double result5 = b + l + d;
+
+        System.out.println("Тип результата b + s: int, значение " + result1);
+        System.out.println("Тип результата i + l: long, значение " + result2);
+        System.out.println("Тип результата l + f: float, значение " + result3);
+        System.out.println("Тип результата f + d: double, значение " + result4);
+    }
+}
+
+//Практика 6
+
+public class Narrowing {
+    public static void main(String[] args) {
+        double pi = 3.14159;
+        int intPi = (int) pi;
+        System.out.println(intPi); 
+
+        long big = 130L;
+        byte small = (byte) big;
+        System.out.println(small); 
+
+        int code = 65;
+        char symbol = (char) code;
+        System.out.println(symbol);
+
+        float floatVal = 32768.5f;
+        short shortVal = (short) floatVal;
+        System.out.println(shortVal); 
+    }
+}
+
+//Практика 7
+
+(byte b = a+10) 
+Ошибка компиляции — a + 10 даёт int (130), присвоение byte без приведения невозможно из-за возможной потери точности.
+
+(byte c =(byte)(a+10))
+ c = (byte)(130). Диапазон byte -128..127. 130 выходит за пределы, происходит переполнение: 130 - 256 = -126. Значение c = -126.
+
+(byte d = a+1) 
+Ошибка компиляции — a + 1 даёт int (121), хотя 121 влезает в byte, компилятор всё равно требует явного приведения (проверка только для константных выражений, а a — не константа).
+
+//Практика 8
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class TypeInference {
+    public static void main(String[] args) {
+        // Вместо String name = "Java";
+        var name = "Java";
+        // Вместо int count = 100;
+        var count = 100;
+        // Вместо ArrayList<String> list = new ArrayList<>();
+        var list = new ArrayList<String>();
+        list.add("Hello");
+
+        // Вместо HashMap<Integer, String> map = new HashMap<>();
+        var map = new HashMap<Integer, String>();
+        map.put(1, "one");
+
+        // В цикле
+        for (var item : list) {
+            System.out.println(item);
+        }
+
+        // Нельзя без инициализации:
+        // var x; // ошибка
+
+        // Нельзя с null:
+        // var y = null; // ошибка (неопределённый тип)
+    }
+}

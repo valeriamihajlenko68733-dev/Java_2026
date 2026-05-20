@@ -1,0 +1,48 @@
+//Практика 1
+import java.io.FileInputStream;
+import java.io.IOException;
+
+public class InputStreamExample {
+    public static void main(String[] args) {
+        // Используем FileInputStream (подкласс InputStream)
+        try (FileInputStream fis = new FileInputStream("test.txt")) {
+            int data;
+            // read() возвращает следующий байт или -1 при достижении конца
+            while ((data = fis.read()) != -1) {
+                System.out.print((char) data);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+//Практика 2
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class OutputStreamExample {
+    public static void main(String[] args) {
+        String message = "Hello, World!";
+        try (FileOutputStream fos = new FileOutputStream("output.txt")) {
+            for (char ch : message.toCharArray()) {
+                fos.write((int) ch);   // write(int) – записывает один байт
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+//Практика 3
+InputStream/OutputStream работают с байтами (8 бит). Они подходят для бинарных данных (изображения, звук, архивы).
+Reader/Writer работают с символами (16 бит в Java, Unicode). Они предназначены для текстовых данных и учитывают кодировки (UTF-8, UTF-16, Windows-1251 и т.д.). Использование байтовых потоков для текста приводит к проблемам с кодировками . Reader/Writer автоматически преобразуют байты в символы согласно заданной кодировке, обеспечивая корректную работу с текстом на разных языках.
+
+//Практика 4
+Интерфейс AutoCloseable  позволяет использовать try‑with‑resources, гарантируя автоматическое закрытие ресурсов (файлов, сетевых соединений, потоков) после выхода из блока. Это упрощает код и предотвращает утечки.
+
+try (FileInputStream fis = new FileInputStream("file.txt")) {
+    // ... fis будет автоматически закрыт
+} catch (IOException e) {
+    e.printStackTrace();
+}

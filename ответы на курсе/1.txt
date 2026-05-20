@@ -1,0 +1,53 @@
+//Практика 1 
+
+public class LiskovSubstitutionExample {
+
+    // Базовый интерфейс для всех геометрических фигур
+    interface Shape {
+        double getArea();
+    }
+
+    // Реализация для прямоугольника
+    static class Rectangle implements Shape {
+        private final double width;
+        private final double height;
+
+        public Rectangle(double width, double height) {
+            this.width = width;
+            this.height = height;
+        }
+
+        @Override
+        public double getArea() {
+            return width * height;
+        }
+    }
+
+    // Реализация для круга
+    static class Circle implements Shape {
+        private final double radius;
+
+        public Circle(double radius) {
+            this.radius = radius;
+        }
+
+        @Override
+        public double getArea() {
+            return Math.PI * radius * radius;
+        }
+    }
+
+
+    public static void printArea(Shape shape) {
+        System.out.println("Площадь фигуры: " + shape.getArea());
+    }
+
+    public static void main(String[] args) {
+        Shape rectangle = new Rectangle(4, 5);
+        Shape circle = new Circle(3);
+
+        // Подстановка различных наследников вместо Shape
+        printArea(rectangle); // Площадь фигуры: 20.0
+        printArea(circle);    // Площадь фигуры: 28.274333882308138
+    }
+}

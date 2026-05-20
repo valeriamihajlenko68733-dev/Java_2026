@@ -1,0 +1,16 @@
+//Практика  1
+Вывод консоли:
+Exception in thread "main" java.lang.ExceptionInInitializerError
+Caused by: java.lang.NumberFormatException: For input string: "Y-"
+	at java.base/java.lang.NumberFormatException.forInputString(...)
+	at java.base/java.lang.Integer.parseInt(...)
+	at java.base/java.lang.Integer.parseInt(...)
+	at App.<clinit>(App.java:3)
+
+Пояснение: 
+Класс App загружается в память при старте JVM.
+Выполняется статический блок инициализации static { ... }.
+Внутри блока вызывается Integer.parseInt("Y-"). Строка "Y-" не может быть преобразована в целое число (содержит букву и знак минус не в начале корректного числа).
+Метод parseInt() выбрасывает NumberFormatException (непроверяемое исключение).
+Поскольку исключение не обрабатывается внутри статического блока, JVM оборачивает его в ExceptionInInitializerError и программа завершается с ошибкой (исключение выбрасывается во время инициализации класса).
+Метод main не запускается, и строка "Hello" не выводится.

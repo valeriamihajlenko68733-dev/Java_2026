@@ -1,0 +1,47 @@
+//Практика1 
+
+public class ExceptionHandlingDemo {
+
+    // Создаём иерархию исключений
+    static class Ex1 extends Exception {}
+    static class Ex2 extends Ex1 {}
+    static class Ex3 extends Ex2 {}
+
+    public static void main(String[] args) {
+
+
+        // Ситуация 1: идентичная обработка не связанных иерархически исключений
+        // Используем multi-catch (оператор |)
+        // Здесь выбрасываем случайное исключение: NullPointerException или ArrayIndexOutOfBoundsException
+        // Эти два исключения не являются предками/потомками друг друга, поэтому допустимо.
+
+        try {
+            // Случайный выбор исключения
+            if (Math.random() < 0.5) {
+                throw new NullPointerException("Имитация NullPointerException");
+            } else {
+                throw new ArrayIndexOutOfBoundsException("Имитация ArrayIndexOutOfBoundsException");
+            }
+        } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
+            System.out.println("Оба исключения обработаны одинаково: " + e.getClass().getSimpleName());
+            System.out.println("Сообщение: " + e.getMessage());
+        }
+
+        // Ситуация 2: иерархия Ex1 ← Ex2 ← Ex3
+        // Обработка идёт от самого конкретного (Ex3) к самому общему (Ex1)
+
+        try {
+            // Бросаем Ex3 (можно также Ex2 или Ex1)
+            throw new Ex3();
+        } catch (Ex3 e) {
+            System.out.println("Поймано Ex3 (самое конкретное)");
+        } catch (Ex2 e) {
+            System.out.println("Поймано Ex2");
+        } catch (Ex1 e) {
+            System.out.println("Поймано Ex1 (самое общее)");
+        }
+    }
+}
+
+//Практика 2
+Использование final в объявлении catch (final Exception e) означает, что в пределах блока catch нельзя изменить ссылку e (присвоить ей другой объект исключения). Параметр e становится константой ссылки. Это редкое, но иногда полезно для явного запрета модификации.

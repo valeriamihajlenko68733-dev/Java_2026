@@ -1,0 +1,38 @@
+//Практика 1
+ 
+// Собственный класс исключения
+class MyException extends Exception {
+    
+    // Конструктор без параметров
+    public MyException() {
+        super();
+    }
+    
+    // Конструктор с сообщением
+    public MyException(String message) {
+        super(message);
+    }
+    
+    // Конструктор с сообщением и причиной
+    public MyException(String message, Throwable cause) {
+        super(message, cause);
+    }
+}
+
+// Пример использования
+public class CustomExceptionExample {
+    public static void main(String[] args) {
+        try {
+            checkNumber(-10);
+        } catch (MyException e) {
+            System.out.println("Поймано: " + e.getMessage());
+        }
+    }
+    
+    static void checkNumber(int num) throws MyException {
+        if (num < 0) {
+            throw new MyException("Число не может быть отрицательным: " + num);
+        }
+        System.out.println("Число корректно: " + num);
+    }
+}

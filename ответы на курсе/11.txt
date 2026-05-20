@@ -1,0 +1,105 @@
+//Практика 1
+
+public class AccessModifiersDemo {
+
+    // Класс, содержащий поля и методы с разными модификаторами
+    static class MyClass {
+        private int privateField = 1;
+        int packageField = 2;          // отсутствует спецификатор → package-private
+        protected int protectedField = 3;
+        public int publicField = 4;
+
+        private void privateMethod() {
+            System.out.println("privateMethod: " + privateField);
+        }
+
+        void packageMethod() {
+            System.out.println("packageMethod: " + packageField);
+        }
+
+        protected void protectedMethod() {
+            System.out.println("protectedMethod: " + protectedField);
+        }
+
+        public void publicMethod() {
+            System.out.println("publicMethod: " + publicField);
+        }
+
+        // Метод для демонстрации доступа к private внутри самого класса
+        public void showPrivateInside() {
+            privateMethod();   // OK
+            System.out.println("Внутри класса: privateField = " + privateField);
+        }
+    }
+
+    // Подкласс, находящийся в том же пакете
+    static class SubClass extends MyClass {
+        public void testAccess() {
+            // private не доступен
+            // System.out.println(privateField); // ошибка компиляции
+            
+            // package-private доступен 
+            System.out.println("SubClass: packageField = " + packageField);
+            
+            // protected доступен 
+            System.out.println("SubClass: protectedField = " + protectedField);
+            
+            // public доступен
+            System.out.println("SubClass: publicField = " + publicField);
+            
+            packageMethod();     // OK
+            protectedMethod();   // OK
+            publicMethod();      // OK
+        }
+    }
+
+    
+    static class SamePackageClass {
+        public void testAccess(MyClass obj) {
+            // obj.privateField   – ошибка!
+            // obj.privateMethod() – ошибка!
+            
+            // package-private – доступен 
+            System.out.println("SamePackageClass: packageField = " + obj.packageField);
+            obj.packageMethod();
+            
+            // protected – доступен 
+            System.out.println("SamePackageClass: protectedField = " + obj.protectedField);
+            obj.protectedMethod();
+            
+            // public – доступен
+            System.out.println("SamePackageClass: publicField = " + obj.publicField);
+            obj.publicMethod();
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Демонстрация спецификаторов доступа \n");
+        
+        MyClass myObj = new MyClass();
+        
+        /
+        myObj.showPrivateInside();
+        System.out.println();
+        
+        
+        SamePackageClass spc = new SamePackageClass();
+        spc.testAccess(myObj);
+        System.out.println();
+        
+        
+        SubClass sub = new SubClass();
+        sub.testAccess();
+        System.out.println();
+        
+      
+        // System.out.println(myObj.privateField); // ошибка компиляции
+        System.out.println("Из main: packageField = " + myObj.packageField);
+        System.out.println("Из main: protectedField = " + myObj.protectedField);
+        System.out.println("Из main: publicField = " + myObj.publicField);
+        
+        myObj.packageMethod();
+        myObj.protectedMethod();
+        myObj.publicMethod();
+    }
+}

@@ -1,0 +1,56 @@
+//Практика 1
+
+import java.util.Formatter;
+
+public class FormatterDemo {
+    public static void main(String[] args) {
+        // %b – логическое значение
+        System.out.printf("%b %b%n", true, false);   // true false
+
+        // %d – десятичное целое
+        System.out.printf("%d + %d = %d%n", 10, 20, 30); // 10 + 20 = 30
+
+        // %f – число с плавающей точкой
+        System.out.printf("PI ≈ %.2f%n", Math.PI);   // PI ≈ 3.14
+
+        // %s – строковое представление
+        System.out.printf("Имя: %s, возраст: %d%n", "Анна", 25); // Имя: Анна, возраст: 25
+
+        // %% – вставка знака процента
+        System.out.printf("Скидка 25%%%n");          // Скидка 25%
+
+        // также можно использовать Formatter напрямую
+        Formatter f = new Formatter();
+        f.format("Логическое: %b, число: %d", 5 > 3, 42);
+        System.out.println(f);
+        f.close();
+    }
+}
+
+//Практика 2
+Метод flush() используется для принудительной записи буферизованных данных в целевой вывод (например, в файл или консоль). Многие форматируемые потоки (например, PrintStream, BufferedWriter, Formatter, связанный с файлом) используют внутренний буфер для повышения производительности. Данные накапливаются в буфере и выводятся только при его заполнении или при закрытии потока. Вызов flush() немедленно сбрасывает буфер, гарантируя, что все данные физически записаны. Если не вызвать flush(), в случае аварийного завершения программы часть данных может быть потеряна. Для консоли System.out автоматически сбрасывается при каждом переводе строки, но для файловых потоков это необходимо делать явно.
+
+//Практика 3 
+
+import java.util.Date;
+
+public class DateFormatDemo {
+    public static void main(String[] args) {
+        Date now = new Date();
+
+        // %tH – час 00-23
+        System.out.printf("Час (0-23): %tH%n", now);
+
+        // %tM – минуты (00-59)
+        System.out.printf("Минуты: %tM%n", now);
+
+        // %tS – секунды (00-59)
+        System.out.printf("Секунды: %tS%n", now);
+
+        // %tY – год четырёхзначный
+        System.out.printf("Год: %tY%n", now);
+
+        // %tB – полное название месяца
+        System.out.printf("Месяц: %tB%n", now);
+    }
+}

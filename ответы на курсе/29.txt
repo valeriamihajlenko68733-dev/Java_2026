@@ -1,0 +1,55 @@
+//Практика 1
+
+//@Override
+Назначение: Указывает, что метод переопределяет метод суперкласса (или реализует метод интерфейса). Помогает компилятору проверить, действительно ли такой метод существует в родительском классе. Если компилятор не найдёт соответствующий метод (из-за опечатки, несовпадения сигнатуры), он выдаст ошибку, предотвращая трудноуловимые баги.
+
+class Parent {
+    void show() { System.out.println("Parent"); }
+}
+
+class Child extends Parent {
+    @Override
+    void show() { System.out.println("Child"); }   // корректно
+    
+    // @Override
+    // void show(String s) { }  // ошибка – нет метода show(String) в Parent
+}
+
+//@Deprecated
+Назначение: Помечает элемент (класс, метод, поле) как устаревший. Компилятор выдаёт предупреждение при использовании такого элемента. Разработчики должны избегать его применения и переходить на альтернативы. В документации можно указать описание (@deprecated в javadoc) и предложить замену.
+
+class Legacy {
+    @Deprecated
+    void oldMethod() { 
+        System.out.println("Не использовать, скоро удалим"); 
+    }
+    
+    void newMethod() { ... }
+}
+
+public class Demo {
+    @SuppressWarnings("deprecation")  // подавляем предупреждение
+    public static void main(String[] args) {
+        Legacy obj = new Legacy();
+        obj.oldMethod();   // предупреждение компиляции без SuppressWarnings
+    }
+}
+
+//@SuppressWarnings
+Назначение: Подавляет предупреждения компилятора, которые разработчик сознательно игнорирует. Область действия – минимальный элемент (метод, класс, переменная). Использование требует осторожности: лучше подавлять конкретные типы предупреждений, а не все ("all").
+
+public class SuppressDemo {
+    // Подавляет предупреждения о неиспользуемых переменных и устаревшем коде
+    @SuppressWarnings({"unused", "deprecation"})
+    public void test() {
+        int x = 10;          // unused – предупреждение подавлено
+        Legacy obj = new Legacy();
+        obj.oldMethod();     // deprecated – подавлено
+    }
+    
+    // Только для одного конкретного предупреждения
+    @SuppressWarnings("rawtypes")
+    public void rawTypeMethod() {
+        java.util.List list = new java.util.ArrayList(); // raw type warning подавлен
+    }
+}

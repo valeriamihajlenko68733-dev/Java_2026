@@ -1,0 +1,42 @@
+//Практика 1
+Что произойдет в результате выполнения следующего кода?
+
+int a1[] = {1,2,3,4,5};
+int a2[] = {6,7,8,9,10};
+a1 = a2;
+
+Ответ: Создаются и заполняются значениями два массива. Ссылки на них хранятся в переменных a1 и a2.
+Затем, после выполнения a1 = a2;, переменная a1 больше не указывает на свой исходный массив {1,2,3,4,5}.
+a1 начинает указывать на тот же самый объект в памяти, что и a2, — на массив {6,7,8,9,10}.
+
+//Практика 2 
+
+import java.util.Arrays;
+public class ArraysExample {
+    public static void main(String[] args) {
+
+        // 1. toString() — Удобный вывод массива
+        int[] numbers = {5, 2, 8, 1, 9};
+        System.out.println("1. Исходный массив (toString): " + Arrays.toString(numbers));
+
+        // 2. sort() — Сортировка
+        Arrays.sort(numbers);
+        System.out.println("2. Отсортированный массив (sort): " + Arrays.toString(numbers));
+
+        // 3. binarySearch() — Поиск элемента
+        int index = Arrays.binarySearch(numbers, 8);
+        System.out.println("3. Индекс числа 8 (binarySearch): " + index);
+
+        // 4. equals() — Сравнение массивов
+        int[] otherNumbers = {1, 2, 5, 8, 9};
+        boolean isEqual = Arrays.equals(numbers, otherNumbers);
+        System.out.println("4. Равны ли массивы? (equals): " + isEqual);
+
+        // 5. compare() — Лексикографическое сравнение 
+        int[] firstArr = {1, 2, 5, 8, 9};
+        int[] secondArr = {1, 2, 6, 7, 8};
+        int compareResult = Arrays.compare(firstArr, secondArr);
+        System.out.println("5. Результат лексикографического сравнения (compare): " + compareResult);
+        // Вывод отрицательного числа, так как 5 < 6
+    }
+}

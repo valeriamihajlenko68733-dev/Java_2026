@@ -1,0 +1,145 @@
+//Практика 1 
+
+public class OperatorsDemo {
+    public static void main(String[] args) {
+        //  1. Оператор присваивания (=) 
+        int a = 10;
+        double d = 3.14;
+        String s = "Hello";
+        System.out.println("1. Присваивание: a = " + a + ", d = " + d + ", s = " + s);
+
+        //  2. Составные операторы присваивания (+=, -=, *=, /=, %=) 
+        int x = 5;
+        x += 3;  // x = x + 3
+        System.out.println("2. x += 3 -> " + x);   // 8
+        x -= 2;  // x = x - 2
+        System.out.println("   x -= 2 -> " + x);   // 6
+        x *= 4;  // x = x * 4
+        System.out.println("   x *= 4 -> " + x);   // 24
+        x /= 6;  // x = x / 6
+        System.out.println("   x /= 6 -> " + x);   // 4
+        x %= 3;  // x = x % 3
+        System.out.println("   x %= 3 -> " + x);   // 1
+
+        // 3. Тернарный оператор (?:) 
+        int age = 20;
+        String status = (age >= 18) ? "взрослый" : "ребенок";
+        System.out.println("3. Тернарный оператор: age=" + age + " -> " + status);
+
+        //  4. Логические операторы 
+        boolean p = true, q = false;
+        System.out.println("4. Логические:");
+        System.out.println("   p || q = " + (p || q));  // true
+        System.out.println("   p && q = " + (p && q));  // false
+        System.out.println("   p | q  = " + (p | q));   // true (без короткого замыкания)
+        System.out.println("   p & q  = " + (p & q));   // false
+        System.out.println("   p ^ q  = " + (p ^ q));   // true (XOR)
+        System.out.println("   !p     = " + (!p));      // false
+
+        //  5. Операторы сравнения (==, !=, >, >=, <, <=) 
+        int m = 10, n = 20;
+        System.out.println("5. Сравнение:");
+        System.out.println("   m == n -> " + (m == n));   // false
+        System.out.println("   m != n -> " + (m != n));   // true
+        System.out.println("   m > n  -> " + (m > n));    // false
+        System.out.println("   m >= n -> " + (m >= n));   // false
+        System.out.println("   m < n  -> " + (m < n));    // true
+        System.out.println("   m <= n -> " + (m <= n));   // true
+
+        //  6. Побитовые операторы (>>, >>>, <<) 
+        int bits = 16; // двоичное 10000
+        System.out.println("6. Побитовые сдвиги:");
+        System.out.println("   bits >> 1 = " + (bits >> 1));   // 8 (1000)  - арифметический
+        System.out.println("   bits >>> 1 = " + (bits >>> 1)); // 8 (1000)  - логический (для беззнакового)
+        System.out.println("   bits << 2 = " + (bits << 2));   // 64 (1000000)
+
+        //  7. Арифметические + и -, * и /, % 
+        int sum = 10 + 5;
+        int diff = 10 - 5;
+        int prod = 10 * 5;
+        int quot = 10 / 5;
+        int rem = 10 % 3;
+        System.out.println("7. Арифметика:");
+        System.out.println("   10 + 5 = " + sum);
+        System.out.println("   10 - 5 = " + diff);
+        System.out.println("   10 * 5 = " + prod);
+        System.out.println("   10 / 5 = " + quot);
+        System.out.println("   10 % 3 = " + rem);
+
+        // 8. Операторы инкремента/декремента (++ и --)
+        int c = 5;
+        System.out.println("8. Инкремент/декремент (начальное c = 5):");
+        // Постфиксная форма: сначала используется старое значение, потом изменяет
+        System.out.println("   c++ (постфикс) = " + (c++)); // выводит 5, потом c становится 6
+        System.out.println("   после c++ значение c = " + c); // 6
+        System.out.println("   ++c (префикс)  = " + (++c)); // увеличивает до 7, выводит 7
+        System.out.println("   после ++c значение c = " + c); // 7
+        System.out.println("   c-- (постфикс) = " + (c--)); // выводит 7, потом c=6
+        System.out.println("   после c-- c = " + c); // 6
+        System.out.println("   --c (префикс)  = " + (--c)); // уменьшает до 5, выводит 5
+
+        //  9. Работа с String (конкатенация + и +=) 
+        String str1 = "Привет";
+        String str2 = " мир";
+        String result = str1 + str2;
+        System.out.println("9. Конкатенация строк:");
+        System.out.println("   \"" + str1 + "\" + \"" + str2 + "\" = \"" + result + "\"");
+        str1 += " Java!";
+        System.out.println("   str1 += \" Java!\" -> \"" + str1 + "\"");
+
+        // Смешанная конкатенация с числами
+        int number = 42;
+        String text = "Ответ: " + number;
+        System.out.println("   \"Ответ: \" + 42 = \"" + text + "\"");
+
+        //  10. Приоритет операторов (скобки)         
+        int res = 5 + 3 * 2;        // без скобок: умножение выше -> 5+6=11
+        int resWithParen = (5 + 3) * 2; // со скобками: 8*2=16
+        System.out.println("10. Приоритет: 5 + 3 * 2 = " + res);
+        System.out.println("   (5 + 3) * 2 = " + resWithParen);
+    }
+}
+
+//Практика 2 
+
+public class InstanceOfDemo {
+    public static void main(String[] args) {
+        Object obj = new String("Hello");
+        String str = "Java";
+        Number num = Integer.valueOf(100);
+
+        System.out.println(" instanceof с объектами ");
+        // obj является экземпляром String?
+        System.out.println("obj instanceof String: " + (obj instanceof String)); // true
+        // obj является экземпляром Object? (всегда true для не-null объектов)
+        System.out.println("obj instanceof Object: " + (obj instanceof Object)); // true
+        // str является экземпляром CharSequence (String реализует CharSequence)
+        System.out.println("str instanceof CharSequence: " + (str instanceof CharSequence)); // true
+        // num является экземпляром Integer? (да)
+        System.out.println("num instanceof Integer: " + (num instanceof Integer)); // true
+        // num является экземпляром Number? (да, т.к. Integer extends Number)
+        System.out.println("num instanceof Number: " + (num instanceof Number)); // true
+        // num является экземпляром Double? (нет)
+        System.out.println("num instanceof Double: " + (num instanceof Double)); // false
+
+        //Поведение с null
+        System.out.println("\n instanceof с null ");
+        String nullString = null;
+        // instanceof для null всегда возвращает false (исключения нет)
+        System.out.println("nullString instanceof String: " + (nullString instanceof String)); // false
+        System.out.println("nullString instanceof Object: " + (nullString instanceof Object)); // false
+
+        // Явная null-ссылка
+        System.out.println("(null) instanceof Object: " + (null instanceof Object)); // false
+
+        // Дополнительно: использование с массивами 
+        System.out.println("\n instanceof с массивами ");
+        int[] intArray = new int[5];
+        System.out.println("intArray instanceof int[]: " + (intArray instanceof int[])); // true
+        System.out.println("intArray instanceof Object: " + (intArray instanceof Object)); // true
+        System.out.println("intArray instanceof Object[]: " + (intArray instanceof Object[])); // false (массив примитивов)
+        String[] strArray = new String[3];
+        System.out.println("strArray instanceof String[]: " + (strArray instanceof String[])); // true
+        System.out.println("strArray instanceof Object[]: " + (strArray instanceof Object[])); // true
+    }
+}

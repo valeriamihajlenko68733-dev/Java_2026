@@ -1,0 +1,142 @@
+//Практика 1
+
+public class DecodeExample {
+    public static void main(String[] args) {
+        // Десятичная система
+        Integer dec = Integer.decode("123");
+        System.out.println(dec); // 123
+
+        // Шестнадцатеричная (префикс 0x)
+        Integer hex1 = Integer.decode("0xFF");
+        System.out.println(hex1); // 255
+
+        // Шестнадцатеричная (префикс #)
+        Integer hex2 = Integer.decode("#A5");
+        System.out.println(hex2); // 165
+
+        // Восьмеричная (префикс 0)
+        Integer oct = Integer.decode("077");
+        System.out.println(oct); // 63 (7*8 + 7)
+
+        // Отрицательное число в шестнадцатеричной форме
+        Integer negHex = Integer.decode("-0x10");
+        System.out.println(negHex); // -16
+
+        // Для Long
+        Long longVal = Long.decode("0x7FFFFFFFFFFFFFFF");
+        System.out.println(longVal); // 9223372036854775807
+
+        // Для Short
+        Short shortVal = Short.decode("0x7FFF");
+        System.out.println(shortVal); // 32767
+
+        // Для Byte
+        Byte byteVal = Byte.decode("0x7F");
+        System.out.println(byteVal); // 127
+
+        // Ошибка: если строка содержит недопустимые символы
+        // Integer bad = Integer.decode("12A"); // NumberFormatException
+    }
+}
+
+//Практика 2
+
+public class BooleanCreation {
+    public static void main(String[] args) {
+        // 1. Конструкторы 
+        Boolean b1 = new Boolean(true);
+        Boolean b2 = new Boolean("true");
+        Boolean b3 = new Boolean("TRUE"); // регистр не важен
+        Boolean b4 = new Boolean("false");
+
+        // 2. Статический метод valueOf 
+        Boolean b5 = Boolean.valueOf(true);
+        Boolean b6 = Boolean.valueOf("true");
+        Boolean b7 = Boolean.valueOf("TrUe"); // регистр не важен -> true
+        Boolean b8 = Boolean.valueOf("anything else"); // false
+
+        // 3. Парсинг строки с последующей автоупаковкой
+        boolean primitive = Boolean.parseBoolean("true");
+        Boolean b9 = primitive; // автоупаковка
+
+        // 4. Константы 
+        Boolean b10 = Boolean.TRUE;
+        Boolean b11 = Boolean.FALSE;
+
+        System.out.println("b1 = " + b1);
+        System.out.println("b10 = " + b10);
+        System.out.println("b6 == b10? " + (b6 == b10)); // true, т.к. valueOf возвращает константы
+    }
+}
+
+//Практика 3 
+NullPointerException возникает при автораспаковке (unboxing) объекта-оболочки, который содержит ссылку null. При попытке извлечь примитивное значение из null JVM бросает исключение
+
+public class BoxingUnboxingDemo {
+    public static void main(String[] args) {
+        //  Автоупаковка 
+        int primitive = 42;
+        Integer wrapped = primitive;   // автоупаковка: int → Integer
+        
+        // Автораспаковка 
+        int anotherPrimitive = wrapped; // автораспаковка: Integer → int
+        
+        // Опасная автораспаковка
+        Integer nullWrapper = null;
+        // int bad = nullWrapper;      // разкомментировать → NullPointerException
+        
+        // Безопасный вариант
+        if (nullWrapper != null) {
+            int safe = nullWrapper;
+        } else {
+            System.out.println("nullWrapper is null, cannot unbox");
+        }
+    }
+}
+
+// Практика 4
+
+Вывод в консоли:
+
+a1==i1 true
+b1==i1 true
+a1==b1 false
+a1.equals(i1) -> true
+b1.equals(i1) -> true
+a1.equals(b1) -> true
+
+Объяснение:
+Переменная i1 имеет примитивный тип int и значение 128. При присваивании Integer a1 = i1 происходит автоупаковка – вызов Integer.valueOf(128). Аналогично для b1.
+
+Сравнение a1 == i1: здесь a1 – объект Integer, i1 – примитив. Для выполнения сравнения a1 автоматически распаковывается (unboxing) до int. Сравниваются числа 128 и 128 → результат true.
+
+Сравнение b1 == i1 даёт true по той же причине.
+
+Сравнение a1 == b1: это сравнение ссылок на объекты. Поскольку значение 128 выходит за пределы диапазона кэширования Integer (по умолчанию от -128 до 127), метод Integer.valueOf(128) создаёт новый объект при каждом вызове. Следовательно, a1 и b1 ссылаются на разные объекты, и == возвращает false.
+
+Все три вызова equals() сравнивают числовые значения (поскольку equals переопределён для сравнения содержимого). Значения равны 128, поэтому везде true.
+
+Вывод в консоли:
+a2==i2 true
+b2==i2 true
+a2==b2 true
+a2.equals(i2) -> true
+b2.equals(i2) -> true
+a2.equals(b2) -> true
+
+Объяснение:
+
+Для числа 127, попадающего в диапазон кэша, Integer.valueOf(127) возвращает один и тот же предсозданный объект из кэша. Поэтому a2 и b2 ссылаются на один объект.
+
+Сравнения a2 == i2 и b2 == i2 снова дают true из-за распаковки.
+
+Сравнение a2 == b2 теперь true, так как ссылки идентичны.
+
+Методы equals() также возвращают true.
+
+Что такое IntegerCache
+IntegerCache – это внутренний статический класс в Integer, который при загрузке класса создаёт и хранит в массиве объекты Integer для значений от -128 до 127 (верхняя граница может быть увеличена через системное свойство java.lang.Integer.IntegerCache.high).
+Его назначение – повышение производительности и экономия памяти. Целые числа из этого диапазона используются очень часто (индексы небольших циклов, коды символов, небольшие счётчики). Кэширование позволяет не создавать каждый раз новый объект, а возвращать уже существующий, что сокращает нагрузку на сборщик мусора и ускоряет работу.
+Благодаря кэшу для чисел в этом диапазоне можно безопасно сравнивать объекты Integer через ==, однако полагаться на это не рекомендуется – всегда следует использовать equals() для сравнения значений, чтобы код оставался корректным при любых значениях и настройках кэша.
+
+Для чего используется класс IntegerCache? Ответ: Класс IntegerCache используется для кэширования объектов Integer в диапазоне значений по умолчанию от -128 до 127 (максимальное значение может быть увеличено настройкой java.lang.Integer.IntegerCache.high).

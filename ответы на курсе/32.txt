@@ -1,0 +1,86 @@
+//Практика 1
+
+public class StringBuilderDemo {
+    public static void main(String[] args) {
+        // 1. Создание пустого StringBuilder
+        StringBuilder sb = new StringBuilder();
+        System.out.println("1. Пустой: " + sb);
+
+        // 2. append() – добавляет строку, число, символ и т.д.
+        sb.append("Hello");
+        sb.append(' ');
+        sb.append(2025);
+        System.out.println("2. После append: " + sb); // Hello 2025
+
+        // 3. insert() – вставляет строку в указанную позицию
+        sb.insert(5, " World");
+        System.out.println("3. После insert(5, \" World\"): " + sb); // Hello World 2025
+
+        // 4. delete() – удаляет символы с beginIndex до endIndex-1
+        sb.delete(11, 15);
+        System.out.println("4. После delete(11,15): " + sb); // Hello World5
+
+        // 5. deleteCharAt() – удаляет символ по индексу
+        sb.deleteCharAt(sb.length() - 1);
+        System.out.println("5. После deleteCharAt(последний): " + sb); // Hello World
+
+        // 6. replace() – заменяет подстроку
+        sb.replace(6, 11, "Java");
+        System.out.println("6. replace(6,11,\"Java\"): " + sb); // Hello Java
+
+        // 7. reverse() – переворачивает строку
+        sb.reverse();
+        System.out.println("7. reverse(): " + sb); // avaJ olleH
+        sb.reverse(); // вернём обратно
+
+        // 8. setCharAt() – заменяет символ в позиции
+        sb.setCharAt(0, 'h');
+        System.out.println("8. setCharAt(0,'h'): " + sb); // hello Java
+
+        // 9. substring() – возвращает подстроку (String, не меняя StringBuilder)
+        String sub = sb.substring(6, 10);
+        System.out.println("9. substring(6,10): " + sub); // Java
+
+        // 10. length() и capacity() – длина и вместимость
+        System.out.println("10. length() = " + sb.length() + ", capacity() = " + sb.capacity());
+
+        // 11. setLength() – урезает или расширяет (заполняя нулями)
+        sb.setLength(5);
+        System.out.println("11. setLength(5): " + sb); // hello
+    }
+}
+
+//Практика 2
+
+public class ConvertBetweenClasses {
+    public static void main(String[] args) {
+        // Исходный String
+        String str = "Java";
+
+        // 1. String -> StringBuilder
+        StringBuilder sb = new StringBuilder(str);
+        // 2. String -> StringBuffer
+        StringBuffer sbf = new StringBuffer(str);
+
+        // 3. StringBuilder -> String
+        String fromSB = sb.toString();
+        // 4. StringBuffer -> String
+        String fromSBF = sbf.toString();
+
+        // 5. StringBuilder -> StringBuffer
+        StringBuffer sbToSbf = new StringBuffer(sb);
+        // 6. StringBuffer -> StringBuilder
+        StringBuilder sbfToSb = new StringBuilder(sbf);
+
+        // 7. StringBuilder -> String через конструктор String(char[])
+        char[] chars = sb.toString().toCharArray();
+        String another = new String(chars);
+
+        System.out.println("Исходная строка: " + str);
+        System.out.println("StringBuilder: " + sb);
+        System.out.println("StringBuffer: " + sbf);
+        System.out.println("Обратно в String: " + fromSB);
+        System.out.println("StringBuffer в String: " + fromSBF);
+        System.out.println("StringBuffer из StringBuilder: " + sbToSbf);
+    }
+}

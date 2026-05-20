@@ -1,0 +1,19 @@
+//Практика 1
+
+// Интерфейс с вложенным классом
+interface Greeting {
+    // Вложенный класс (автоматически public static)
+    class Hello {
+        public void say() {
+            System.out.println("Привет из вложенного класса в интерфейсе!");
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Создание экземпляра вложенного класса
+        Greeting.Hello obj = new Greeting.Hello();
+        obj.say();   // вызов метода
+    }
+}

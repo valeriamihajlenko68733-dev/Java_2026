@@ -1,0 +1,88 @@
+//Практика 1
+
+public class StringMethodsDemo {
+    public static void main(String[] args) {
+        String str = "  Hello Java World!  ";
+        String another = "hello java world!";
+
+        // 1. length() – возвращает длину строки (количество символов)
+        System.out.println("Длина строки: " + str.length()); // 20
+
+        // 2. charAt() – возвращает символ по индексу (0‑based)
+        System.out.println("Символ на индексе 6: " + str.charAt(6)); // 'J'
+
+        // 3. substring() – извлекает подстроку от beginIndex до endIndex-1
+        System.out.println("Подстрока [6,10): " + str.substring(6, 10)); // "Java"
+
+        // 4. toLowerCase() / toUpperCase() – преобразование регистра
+        System.out.println("Нижний регистр: " + str.toLowerCase());
+        System.out.println("Верхний регистр: " + str.toUpperCase());
+
+        // 5. trim() – удаляет пробелы в начале и конце строки
+        System.out.println("После trim(): '" + str.trim() + "'");
+
+        // 6. replace() – заменяет все вхождения символа (или CharSequence)
+        System.out.println("Замена пробелов на '_': " + str.replace(' ', '_'));
+
+        // 7. contains() – проверяет, содержит ли строка указанную последовательность
+        System.out.println("Содержит 'Java': " + str.contains("Java")); // true
+
+        // 8. startsWith() / endsWith() – проверка префикса/суффикса
+        System.out.println("Начинается с '  He': " + str.startsWith("  He")); // true
+        System.out.println("Заканчивается на '!  ': " + str.endsWith("!  ")); // true
+
+        // 9. equals() и equalsIgnoreCase() – сравнение строк
+        System.out.println("str.equals(another): " + str.trim().equals(another)); // false (разный регистр)
+        System.out.println("equalsIgnoreCase: " + str.trim().equalsIgnoreCase(another)); // true
+
+        // 10. split() – разбивает строку на массив по регулярному выражению
+        String[] words = str.trim().split(" ");
+        System.out.print("Разбиение по пробелу: ");
+        for (String w : words) System.out.print("[" + w + "] ");
+        System.out.println();
+
+        // 11. join() – статический метод, объединяет строки с разделителем
+        String joined = String.join("-", "2025", "04", "07");
+        System.out.println("String.join: " + joined);
+    }
+}
+
+//Практика 2
+
+import java.util.StringJoiner;
+
+public class StringJoinerDemo {
+    public static void main(String[] args) {
+        // 1. Простой разделитель
+        StringJoiner sj1 = new StringJoiner(", ");
+        sj1.add("яблоко");
+        sj1.add("банан");
+        sj1.add("апельсин");
+        System.out.println(sj1); // яблоко, банан, апельсин
+
+        // 2. С префиксом и суффиксом (например, для JSON-массива)
+        StringJoiner sj2 = new StringJoiner(", ", "[", "]");
+        sj2.add("один").add("два").add("три");
+        System.out.println(sj2); // [один, два, три]
+
+        // 3. Пустой StringJoiner с префиксом/суффиксом
+        StringJoiner empty = new StringJoiner(", ", "{", "}");
+        System.out.println(empty.toString()); // {}  (без элементов)
+
+        // 4. Слияние двух StringJoiner
+        StringJoiner sjA = new StringJoiner("; ");
+        sjA.add("A").add("B");
+        StringJoiner sjB = new StringJoiner("; ");
+        sjB.add("C").add("D");
+        sjA.merge(sjB);
+        System.out.println(sjA); // A; B; C; D
+
+        // 5. Установка пустого значения (если нет элементов)
+        StringJoiner withEmpty = new StringJoiner(", ");
+        withEmpty.setEmptyValue("(пусто)");
+        System.out.println(withEmpty); // (пусто)
+    }
+}
+
+//Практика 3
+Три двойные кавычки (""") в Java используются для создания текстовых блоков (text blocks) – многострочных строковых литералов. Они позволяют писать строки, содержащие переносы строк, пробелы и кавычки, без необходимости экранирования большинства символов. Это упрощает вставку в код фрагментов HTML, JSON, SQL, XML и других форматированных текстов, улучшая читаемость и поддерживая естественное форматирование.

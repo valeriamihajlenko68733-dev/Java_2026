@@ -1,0 +1,40 @@
+//Практика 1
+
+public class A {
+    public static int a = 1;
+    public static int b = 2;  // инициализируем, чтобы было что выводить
+
+    public static void printVars() {
+        System.out.println("a = " + a);
+        System.out.println("b = " + b);
+    }
+
+    // Статический метод того же класса
+    public static void staticCaller() {
+        System.out.println(" Вызов из статического метода того же класса ");
+        printVars();                // вариант 1: без имени класса
+        A.printVars();              // вариант 2: с именем класса
+    }
+
+    // Нестатический метод того же класса
+    public void instanceCaller() {
+        System.out.println("Вызов из нестатического метода того же класса ");
+        printVars();                // вариант 3: без имени класса
+        A.printVars();              // вариант 4: с именем класса
+    }
+
+    public static void main(String[] args) {
+        // Вариант 5: вызов через имя класса 
+        System.out.println(" Вызов через имя класса ");
+        A.printVars();
+
+        // Вариант 6: вызов через экземпляр класса 
+        System.out.println(" Вызов через экземпляр класса ");
+        A obj = new A();
+        obj.printVars();   // компилятор преобразует в A.printVars()
+
+        // Демонстрация вызовов из других методов
+        staticCaller();
+        obj.instanceCaller();
+    }
+}

@@ -1,0 +1,64 @@
+//Практика 1
+
+class SuperClass {
+    // final-метод – нельзя переопределить в подклассе
+    public final void finalMethod() {
+        System.out.println("Этот метод final в суперклассе");
+    }
+    
+    public void ordinaryMethod() {
+        System.out.println("Обычный метод");
+    }
+}
+
+class SubClass extends SuperClass {
+    // Попытка переопределить finalMethod вызовет ошибку компиляции:
+    // "Cannot override the final method from SuperClass"
+    
+    // @Override
+    // public void finalMethod() { }  // Ошибка!
+    
+    @Override
+    public void ordinaryMethod() {    // обычный метод переопределить можно
+        System.out.println("Переопределённый метод");
+    }
+}
+
+public class FinalMethodDemo {
+    public static void main(String[] args) {
+        SubClass obj = new SubClass();
+        obj.finalMethod();      // вызывается метод суперкласса
+        obj.ordinaryMethod();   // вызывается переопределённый метод
+    }
+}
+
+//Практика 2
+
+// final-класс – от него нельзя наследоваться
+final class FinalClass {
+    public void show() {
+        System.out.println("Метод final-класса");
+    }
+}
+
+// Попытка создать подкласс от FinalClass вызовет ошибку компиляции:
+// "The type Sub cannot subclass the final class FinalClass"
+/*
+class Sub extends FinalClass {   // Ошибка!
+}
+*/
+
+// Обычный не-final класс – от него наследоваться можно
+class NormalClass {
+    void display() { }
+}
+
+class ExtendedNormal extends NormalClass {  // OK
+}
+
+public class FinalClassDemo {
+    public static void main(String[] args) {
+        FinalClass obj = new FinalClass();
+        obj.show();  // можно создавать объекты, но нельзя наследовать
+    }
+}

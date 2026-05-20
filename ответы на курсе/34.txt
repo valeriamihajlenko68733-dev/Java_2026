@@ -1,0 +1,59 @@
+//Практика 1
+
+Throwable – корневой класс всех исключений и ошибок. Все классы исключений наследуются от него.
+
+Error – представляет серьёзные проблемы, которые обычно не следует пытаться обрабатывать в программе (например, OutOfMemoryError, StackOverflowError). Они возникают из-за сбоев в JVM, и программа не может их восстановить.
+
+Exception – базовый класс для всех проверяемых исключений (checked exceptions). Такие исключения компилятор требует либо обработать (try-catch), либо объявить в сигнатуре метода (throws).
+
+RuntimeException – подкласс Exception, обозначает непроверяемые исключения (unchecked), которые возникают из-за ошибок программирования (например, деление на ноль, выход за границы массива). Их не обязательно перехватывать или объявлять.
+
+//Практика 2
+
+public class ExceptionExamples {
+    public static void main(String[] args) {
+        // 1. ArithmeticException – деление на ноль
+        try {
+            int x = 10 / 0;
+        } catch (ArithmeticException e) {
+            System.out.println("ArithmeticException: " + e.getMessage());
+        }
+
+        // 2. ArrayIndexOutOfBoundsException – выход за границы массива
+        try {
+            int[] arr = {1, 2, 3};
+            int a = arr[5];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("ArrayIndexOutOfBoundsException: " + e.getMessage());
+        }
+
+        // 3. IllegalArgumentException – неверный аргумент метода
+        try {
+            setAge(-5);
+        } catch (IllegalArgumentException e) {
+            System.out.println("IllegalArgumentException: " + e.getMessage());
+        }
+
+        // 4. ClassCastException – некорректное приведение типов
+        try {
+            Object obj = "String";
+            Integer num = (Integer) obj;
+        } catch (ClassCastException e) {
+            System.out.println("ClassCastException: " + e.getMessage());
+        }
+
+        // 5. NullPointerException – вызов метода на null-ссылке
+        try {
+            String s = null;
+            s.length();
+        } catch (NullPointerException e) {
+            System.out.println("NullPointerException: " + e.getMessage());
+        }
+    }
+
+    static void setAge(int age) {
+        if (age < 0) {
+            throw new IllegalArgumentException("Возраст не может быть отрицательным");
+        }
+    }
+}

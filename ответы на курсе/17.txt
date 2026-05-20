@@ -1,0 +1,77 @@
+//Практика 1
+
+public class InstanceOfGenericExample {
+    public static void main(String[] args) {
+        Wrapper<Integer> intWrapper = new Wrapper<>();
+        Wrapper<String> strWrapper = new Wrapper<>();
+
+        // НЕ компилируется: информация о Integer недоступна в runtime
+        // System.out.println(intWrapper instanceof Wrapper<Integer>); // ошибка
+
+        // Разрешено: проверка на raw type
+        System.out.println(intWrapper instanceof Wrapper);   // true
+        System.out.println(strWrapper instanceof Wrapper);   // true
+
+        // Разрешено: проверка на wildcard
+        System.out.println(intWrapper instanceof Wrapper<?>); // true
+        System.out.println(strWrapper instanceof Wrapper<?>); // true
+
+        // Проверка вместе с получением элемента 
+        if (intWrapper instanceof Wrapper) {
+            // Можно получить объект, но тип элемента стирается до Object
+            Object item = ((Wrapper<?>) intWrapper).getItem();
+            System.out.println("Item: " + item);
+        }
+    }
+}
+
+// Вспомогательный класс (
+class Wrapper<T> {
+    private T item;
+    public void setItem(T item) { this.item = item; }
+    public T getItem() { return item; }
+}
+
+//Практика 2
+
+import java.util.*;
+
+public class WildcardExample {
+    // Метод, который читает числа из списка (Producer)
+    public static double sumList(List<? extends Number> list) {
+        double sum = 0.0;
+        for (Number n : list) {
+            sum += n.doubleValue();
+        }
+        return sum;
+    }
+
+    // Метод, который добавляет целые числа в список 
+    public static void fillWithOnes(List<? super Integer> list) {
+        for (int i = 0; i < 5; i++) {
+            list.add(i);     
+        }
+        // list.get(0) возвращает Object – тип неизвестен
+    }
+
+    public static void main(String[] args) {
+        // <? extends Number> позволяет передать List<Integer>, List<Double> и т.д.
+        List<Integer> ints = Arrays.asList(1, 2, 3);
+        List<Double> doubles = Arrays.asList(1.5, 2.5);
+        System.out.println(sumList(ints));    // 6.0
+        System.out.println(sumList(doubles)); // 4.0
+
+        // <? super Integer> позволяет передать List<Number>, List<Object> и т.д.
+        List<Number> numbers = new ArrayList<>();
+        fillWithOnes(numbers);
+        System.out.println(numbers); // [0, 1, 2, 3, 4]
+
+        List<Object> objects = new ArrayList<>();
+        fillWithOnes(objects);       // Object тоже подходит
+    }
+}
+Объяснение:
+Ограниченные wildcard-параметры позволяют писать гибкие и безопасные методы, которые работают с семействами связанных типов, сохраняя при этом контроль над чтением и записью. Основное правило: PECS – Producer Extends, Consumer Super.
+
+<? extends T> – производитель (вы «читаете» из него). Можно получать объекты типа T, но нельзя добавлять (кроме null).
+<? super T> – потребитель (вы «записываете» в него). Можно добавлять объекты типа T и читать их как Object.
